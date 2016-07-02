@@ -4,6 +4,8 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
   var classList = this;
   var keyisdown;
 
+  $scope.currentCommitMessage= "";
+
   //var repo = 'eclipse/dltk.core';
   var repo = 'gitblit/gitblit';
 
@@ -87,6 +89,11 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
       diff2htmlUi.highlightCode('#side-by-side');
       console.log(($("a:contains('" + "/" + cls.name + ".java" + "')")[0]).click());
     }
+
+    $http.get(url).then(function(response){
+      $scope.currentCommitMessage = response.data.commit.message;
+      $scope.$emit('someEvent', $scope.currentCommitMessage);
+    });
 
     $http(config).then(function(response) {
       var lineDiffExample = response.data;
@@ -318,6 +325,9 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
 app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, $sce, githuburl) {
 
   $scope.githuburl = $sce.trustAsResourceUrl(githuburl);
+  $scope.$on('someEvent', function(event, args) {
+    $scope.currentCommitMessage = args;
+  });
 
   $scope.ok = function() {
     $uibModalInstance.close($scope.githuburl);
