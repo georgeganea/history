@@ -1,0 +1,64 @@
+<html ng-app="todoApp">
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script src="node_modules/n3-charts/node_modules/angular/angular.js"></script>
+		<script src="node_modules/n3-charts/node_modules/d3/d3.min.js"></script>
+		<script src="node_modules/n3-charts/build/LineChart.js"></script>
+		<link rel="stylesheet" href="node_modules/n3-charts/build/LineChart.css">
+	<script type="text/javascript" src="script.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+	<div ng-controller="TodoListController as classList">
+		  <label>Show God Class: <input type="checkbox" ng-model="gc" ng-init="gc=true" /></label>
+	      <ul ng-if="gc" class="unstyled">
+	        <li ng-repeat="cls in classList.todos">
+	        <hr>
+	          <div style:"height:400px;">{{cls.name}}
+		      	<linechart height="250" data="cls.severity" options="options" on-hover="onClick"></linechart>
+		      </div>
+		      <div>
+		      <label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
+			      <div ng-if="checked" style:"height:400px;">ATFD
+			      	<linechart height="250" data="cls.ATFD" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">WMC
+			      	<linechart height="250" data="cls.WMC" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">TCC
+			      	<linechart height="250" data="cls.TCC" options="options"></linechart>
+			      </div>
+		      </div>
+	        </li>
+	      </ul>
+
+		  <!--label>Show Refused Parent Bequest: <input type="checkbox" ng-model="rbp" ng-init="rbp=false" /></label>
+	      <ul ng-if="rbp" class="unstyled">
+	        <li ng-repeat="todo in todoList.rpb">
+	        <hr>
+	          <div style:"height:400px;">{{cls.name}}
+		      	<linechart height="250" data="cls.severity" options="options"></linechart>
+		      </div>
+		      <div ng-class="{'selected': checked}">
+		      <label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
+			      <div ng-if="checked" style:"height:400px;">BUR
+			      	<linechart height="250" data="cls.BUR" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">BOvR
+			      	<linechart height="250" data="cls.BOvR" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">NProtM
+			      	<linechart height="250" data="cls.NProtM" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">WMC
+			      	<linechart height="250" data="cls.BUR" options="options"></linechart>
+			      </div>
+			      <div ng-if="checked" style:"height:400px;">NOM
+			      	<linechart height="250" data="cls.BOvR" options="options"></linechart>
+			      </div>
+		      </div>
+	        </li>
+	      </ul-->
+	 </div>
+ </body>
+</html>

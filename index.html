@@ -1,64 +1,88 @@
-<html ng-app="todoApp">
+<html ng-app="hindsight">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>	
-    <script type="text/javascript" src="bower_components/moment/moment.js"></script>	
-    <script type="text/javascript" src="bower_components/n3-line-chart/build/line-chart.js"></script>
-	<script type="text/javascript" src="script.js"></script>	
-	<link rel="stylesheet" type="text/css" href="style.css">
+    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script src="node_modules/n3-charts/node_modules/angular/angular.js"></script>
+		<script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+		<script src="node_modules/n3-charts/node_modules/d3/d3.min.js"></script>
+		<script src="node_modules/n3-charts/build/LineChart.js"></script>
+		<script src="node_modules/diff2html/dist/diff2html-templates.js"></script>
+		<script src="node_modules/diff2html/dist/diff2html.js"></script>
+		<script src="node_modules/diff2html/dist/diff2html-ui.js"></script>
+
+
+		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="jsdiff.js"></script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/languages/scala.min.js"></script>
+
+
+		<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css"></link>
+		<link rel="stylesheet" type="text/css" href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css"></link>
+		<link rel="stylesheet" href="node_modules/n3-charts/build/LineChart.css">
+		<link rel="stylesheet" type="text/css" href="node_modules/diff2html/dist/diff2html.css"></link>
+		<link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-	<div ng-controller="TodoListController as todoList">
+
+	<div ng-controller="TodoListController as classList">
+
+			<script type="text/ng-template" id="myModalContent.html">
+		        <div class="modal-header">
+		            <h3 class="modal-title">I'm a modal!</h3>
+		        </div>
+		        <div class="modal-body">
+				<div id="side-by-side"></div>
+		            <ul>
+		                <li ng-repeat="item in items">
+		                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+		                </li>
+		            </ul>
+		        <div class="modal-footer">
+		            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+		            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        		</div>
+		            Selected: <b>{{ githuburl }}</b>
+		        </div>
+		    </script>
+
 		  <label>Show God Class: <input type="checkbox" ng-model="gc" ng-init="gc=true" /></label>
 	      <ul ng-if="gc" class="unstyled">
-	        <li ng-repeat="todo in todoList.todos">
-	        <hr>
-	          <div style:"height:400px;">{{todo.name}}
-		      	<linechart height="250" data="todo.severity" options="options"></linechart>
-		      </div>
-		      <div>
-		      <label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
-			      <div ng-if="checked" style:"height:400px;">ATFD
-			      	<linechart height="250" data="todo.ATFD" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">WMC
-			      	<linechart height="250" data="todo.WMC" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">TCC
-			      	<linechart height="250" data="todo.TCC" options="options"></linechart>
-			      </div>
-		      </div>
-	        </li>
+	      <!--  <div ng-repeat="cls in classList.todos | limitTo: 2" class="entireClass"> -->
+	      <div ng-repeat="cls in classList.todos" class="entireClass"> 
+  	        <hr>
+  	          <div>
+  		          <div style="height:300px; margin-bottom: 50px">{{cls.name}}
+  			      	<linechart data="cls.severity" options="options" on-click="mahClickCallback(row, cls)"></linechart>
+  			      </div>
+  		      </div>
+  		      <div>
+  		      	<label>Show accesses map: <input type="checkbox" ng-model="mapChecked" ng-init="mapChecked=true" /></label>
+  		      	<label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
+  			      <div ng-if="checked" style="height:350px;">ATFD
+  			      	<linechart data="cls.ATFD" options="optionsatfd"></linechart>
+  			      </div>
+  			      <div ng-if="checked" style="height:350px;">WMC
+  			      	<linechart data="cls.WMC" options="options"></linechart>
+  			      </div>
+  			      <div ng-if="checked" style="height:350px;">TCC
+  			      	<linechart  data="cls.TCC" options="optionstcc"></linechart>
+  			      </div>
+	              <div ng-if="mapChecked" ng-style="cls.stl" class="accmap">
+	                <div ng-repeat="versionacc in cls.accesses"  class="versions">
+	                  <div ng-repeat="(key, val) in cls.accessesIDMap" class="accesses" ng-style="computeStyle(val,versionacc)" ng-click="mahClickCallback(versionacc.commit, cls)">-</div>
+	                </div>
+	                <div class="attrnames">
+	                  <div ng-repeat="(key,val) in cls.accessesIDMap" class="attrname"><span>{{key}}</span></div>
+	                </div>
+	              </div>
+  		      </div>
+	        </div>
 	      </ul>
-
-		  <!--label>Show Refused Parent Bequest: <input type="checkbox" ng-model="rbp" ng-init="rbp=false" /></label>
-	      <ul ng-if="rbp" class="unstyled">
-	        <li ng-repeat="todo in todoList.rpb">
-	        <hr>
-	          <div style:"height:400px;">{{todo.name}}
-		      	<linechart height="250" data="todo.severity" options="options"></linechart>
-		      </div>
-		      <div ng-class="{'selected': checked}">
-		      <label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
-			      <div ng-if="checked" style:"height:400px;">BUR
-			      	<linechart height="250" data="todo.BUR" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">BOvR
-			      	<linechart height="250" data="todo.BOvR" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">NProtM
-			      	<linechart height="250" data="todo.NProtM" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">WMC
-			      	<linechart height="250" data="todo.BUR" options="options"></linechart>
-			      </div>
-			      <div ng-if="checked" style:"height:400px;">NOM
-			      	<linechart height="250" data="todo.BOvR" options="options"></linechart>
-			      </div>
-		      </div>
-	        </li>
-	      </ul-->
 	 </div>
  </body>
 </html>
