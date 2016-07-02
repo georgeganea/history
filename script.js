@@ -5,7 +5,7 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
   var keyisdown;
 
   //var repo = 'eclipse/dltk.core';
-  var repo = 'eclipse/jgit';
+  var repo = 'gitblit/gitblit';
 
   function onKeyDown(event) {
     if (event.metaKey)
