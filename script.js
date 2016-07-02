@@ -320,8 +320,6 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
   });
 });
 
-
-
 app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, $sce, githuburl) {
 
   $scope.githuburl = $sce.trustAsResourceUrl(githuburl);

@@ -33,7 +33,7 @@
 
 			<script type="text/ng-template" id="myModalContent.html">
 		        <div class="modal-header">
-		            <h3 class="modal-title">Commit message: {{currentCommitMessage}}</h3>
+		            <h3 class="modal-title">{{currentCommitMessage}}</h3>
 		        </div>
 		        <div class="modal-body">
 				<div id="side-by-side"></div>
@@ -61,7 +61,7 @@
   			      </div>
   		      </div>
   		      <div>
-  		      	<label>Show accesses map: <input type="checkbox" ng-model="mapChecked" ng-init="mapChecked=true" /></label>
+  		      	<label>Show accesses map: <input type="checkbox" ng-model="mapChecked" ng-init="mapChecked=false" /></label>
   		      	<label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
   			      <div ng-if="checked" style="height:350px;">ATFD
   			      	<linechart data="cls.ATFD" options="optionsatfd"></linechart>
