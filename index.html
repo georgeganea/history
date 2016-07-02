@@ -33,20 +33,20 @@
 
 			<script type="text/ng-template" id="myModalContent.html">
 		        <div class="modal-header">
-		            <h3 class="modal-title">{{currentCommitMessage}}</h3>
+		            <h3 class="modal-title">{{msg}}</h3>
 		        </div>
 		        <div class="modal-body">
-				<div id="side-by-side"></div>
-		            <ul>
-		                <li ng-repeat="item in items">
-		                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-		                </li>
-		            </ul>
-		        <div class="modal-footer">
-		            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-		            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        		</div>
-		            Selected: <b>{{ githuburl }}</b>
+					<div id="side-by-side"></div>
+			            <ul>
+			                <li ng-repeat="item in items">
+			                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+			                </li>
+			            </ul>
+			        <div class="modal-footer">
+			            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+			            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	        		</div>
+			            Selected: <b>{{ githuburl }}</b>
 		        </div>
 		    </script>
 

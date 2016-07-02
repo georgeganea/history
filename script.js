@@ -57,6 +57,9 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
       resolve: {
         githuburl: function() {
           return $scope.githuburl;
+        },
+        msg: function() {
+          return $scope.currentCommitMessage;
         }
       }
     });
@@ -91,20 +94,15 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
     }
 
     $http.get(url).then(function(response){
-      $scope.currentCommitMessage = response.data.commit.message;
-      $scope.$emit('someEvent', $scope.currentCommitMessage);
+        $scope.currentCommitMessage = response.data.commit.message;
+        $http(config).then(function(response) {
+          var lineDiffExample = response.data;
+          showDiffDialog(lineDiffExample);
+          }, function(error) {}
+        );
     });
 
-    $http(config).then(function(response) {
-      var lineDiffExample = response.data;
-      showDiffDialog(lineDiffExample);
-    }, function(error) {
-      config.url = "https://api.github.com/repos/eclipse-dltk/dltk.core/commits/" + comm;
-      $http(config).then(function(response) {
-        var lineDiffExample = response.data;
-        showDiffDialog(lineDiffExample);
-      });
-    });
+    
 
     modalInstance.result.then(function(selectedItem) {
       $scope.selected = selectedItem;
@@ -320,13 +318,11 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
   });
 });
 
-app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, $sce, githuburl) {
+app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, $sce, githuburl, msg) {
 
   $scope.githuburl = $sce.trustAsResourceUrl(githuburl);
-  $scope.$on('someEvent', function(event, args) {
-    $scope.currentCommitMessage = args;
-  });
-
+  $scope.msg = msg;
+  
   $scope.ok = function() {
     $uibModalInstance.close($scope.githuburl);
   };
