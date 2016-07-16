@@ -93,16 +93,16 @@ app.controller('TodoListController', function($scope, $document, $window, $http,
       console.log(($("a:contains('" + "/" + cls.name + ".java" + "')")[0]).click());
     }
 
-    $http.get(url).then(function(response){
+    $http({"url":url}).then(function(response){
         $scope.currentCommitMessage = response.data.commit.message;
-        $http(config).then(function(response) {
-          var lineDiffExample = response.data;
+        $http(config).then(function(resp) {
+          var lineDiffExample = resp.data;
           showDiffDialog(lineDiffExample);
           }, function(error) {}
         );
     });
 
-    
+
 
     modalInstance.result.then(function(selectedItem) {
       $scope.selected = selectedItem;
@@ -322,7 +322,7 @@ app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, $sce, gi
 
   $scope.githuburl = $sce.trustAsResourceUrl(githuburl);
   $scope.msg = msg;
-  
+
   $scope.ok = function() {
     $uibModalInstance.close($scope.githuburl);
   };

@@ -4,7 +4,8 @@
   "description": "",
   "main": "script.js",
   "dependencies": {
-    "n3-charts": "^2.0.14"
+    "n3-charts": "^2.0.14",
+    "diff2html": "2.0.1"
   },
   "devDependencies": {
     "lite-server": "^2.1.0"
