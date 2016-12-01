@@ -55,11 +55,11 @@
 	      <!--  <div ng-repeat="cls in classList.todos | limitTo: 2" class="entireClass"> -->
 	      <div ng-repeat="cls in classList.todos" class="entireClass">
   	        <hr>
-  	          <!-- <div>
+  	          <div>
   		          <div style="height:300px; margin-bottom: 50px">{{cls.name}}
-  			      	<linechart data="cls.severity" options="options" on-click="mahClickCallback(row, cls)"></linechart>
+  			      	<!-- <linechart data="cls.severity" options="options" on-click="mahClickCallback(row, cls)"></linechart> -->
   			      </div>
-  		      </div> -->
+  		      </div>
   		      <div>
   		      	<label>Show accesses map: <input type="checkbox" ng-model="mapChecked" ng-init="mapChecked=true" /></label>
   		      	<label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
