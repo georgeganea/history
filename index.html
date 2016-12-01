@@ -62,7 +62,7 @@
   		      </div>
   		      <div>
   		      	<label>Show accesses map: <input type="checkbox" ng-model="mapChecked" ng-init="mapChecked=true" /></label>
-  		      	<label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
+  		      	<!-- <label>Show metrics: <input type="checkbox" ng-model="checked" ng-init="checked=false" /></label>
   			      <div ng-if="checked" style="height:350px;">ATFD
   			      	<linechart data="cls.ATFD" options="optionsatfd"></linechart>
   			      </div>
@@ -71,7 +71,7 @@
   			      </div>
   			      <div ng-if="checked" style="height:350px;">TCC
   			      	<linechart  data="cls.TCC" options="optionstcc"></linechart>
-  			      </div>
+  			      </div> -->
 	              <div ng-if="mapChecked" ng-style="cls.stl" class="accmap">
 	                <div ng-repeat="versionacc in cls.accesses"  class="versions">
 	                  <div ng-repeat="(key, val) in cls.accessesIDMap" class="accesses" ng-style="computeStyle(val,versionacc)" ng-click="mahClickCallback(versionacc.commit, cls)">-</div>
